@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HIMES Patient Registration QA Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f5f9;
+      padding: 30px;
+    }
+
+    .container {
+      max-width: 450px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px;
+      width: 100%;
+      background: #1769aa;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #message {
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Patient Registration</h2>
+    <p>QA demonstration only</p>
+
+    <form id="registrationForm">
+      <label for="patientName">Patient Name</label>
+      <input
+        type="text"
+        id="patientName"
+        name="patientName"
+        required
+        maxlength="60"
+      >
+
+      <label for="email">Email Address</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+        maxlength="100"
+      >
+
+      <button type="submit">Register</button>
+    </form>
+
+    <p id="message" role="status" aria-live="polite"></p>
+  </div>
+
+  <script>
+    const form = document.getElementById("registrationForm");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const patientName =
+        document.getElementById("patientName").value.trim();
+
+      if (!patientName) {
+        message.textContent = "Please enter a patient name.";
+        return;
+      }
+
+      message.textContent =
+        "Demo registration completed. No patient data was saved.";
+
+      form.reset();
+    });
+  </script>
+</body>
+</html>
