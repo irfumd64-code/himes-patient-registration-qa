@@ -37,3 +37,31 @@ test('Valid registration should show success message', async ({ page }) => {
     'Demo registration completed'
   );
 });
+
+test('Patient name should not accept only spaces', async ({ page }) => {
+  await page.locator('#patientName').fill('   ');
+  await page.locator('#email').fill('test@example.com');
+  await page.getByRole('button', { name: 'Register' }).click();
+
+  await expect(page.locator('#message'))
+    .toContainText('Please enter a patient name.');
+});
+
+test('Patient name should respect maximum length', async ({ page }) => {
+  await expect(page.locator('#patientName'))
+    .toHaveAttribute('maxlength', '60');
+});
+
+test('Email field should be required', async ({ page }) => {
+  await expect(page.locator('#email'))
+    .toHaveAttribute('required', '');
+});
+
+test('Registration should clear the form after success', async ({ page }) => {
+  await page.locator('#patientName').fill('Test Patient');
+  await page.locator('#email').fill('test@example.com');
+  await page.getByRole('button', { name: 'Register' }).click();
+
+  await expect(page.locator('#patientName')).toHaveValue('');
+  await expect(page.locator('#email')).toHaveValue('');
+});
